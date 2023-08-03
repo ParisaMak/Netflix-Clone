@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import './index.css';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import Main from './components/Main';
+import { Routes ,Route , Link, NavLink }  from 'react-router-dom';
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    fetch("https://moviesdatabase.p.rapidapi.com/titles", {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Key":
+          "53c14de0e0msh35541b6d6f0feb1p166c7fjsn6fcc9ebaa163",
+          "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
+        },
+      })
+      .then(response => response.json())
+      .then(response => {
+        console.log(response)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+},[])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Navbar />
+    <Routes>
+      <Route path='/' element = {<Home />}>
+      </Route>
+    </Routes>
+    </>
+   
   );
 }
 
