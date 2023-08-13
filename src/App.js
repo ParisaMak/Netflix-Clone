@@ -1,35 +1,33 @@
 import './index.css';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
-import Main from './components/Main';
-import { Routes ,Route , Link, NavLink }  from 'react-router-dom';
-import { useEffect } from 'react';
+import { Routes ,Route}  from 'react-router-dom';
+import { AuthContextProvider } from './context/AuthContext';
+import LogIn from './pages/LogIn';
+import SignUp from './pages/SignUp';
+import Account from './pages/Account';
+import ProtectedRoute from './components/protectedRoute'
+
 
 function App() {
-  useEffect(() => {
-    fetch("https://moviesdatabase.p.rapidapi.com/titles", {
-        method: "GET",
-        headers: {
-          "X-RapidAPI-Key":
-          "53c14de0e0msh35541b6d6f0feb1p166c7fjsn6fcc9ebaa163",
-          "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
-        },
-      })
-      .then(response => response.json())
-      .then(response => {
-        console.log(response)
-      })
-      .catch(err => {
-        console.log(err);
-      });
-},[])
   return (
     <>
-    <Navbar />
-    <Routes>
-      <Route path='/' element = {<Home />}>
-      </Route>
-    </Routes>
+    <AuthContextProvider >
+      <Navbar />
+      <Routes>
+        <Route path='/' element = {<Home />}/>
+        <Route path='/login' element ={<LogIn />}/>
+        <Route path='/SignUp' element ={<SignUp />}/>
+        <Route 
+          path='/Account' 
+          element ={
+          <ProtectedRoute >
+            <Account />
+          </ProtectedRoute >
+          }
+        />
+      </Routes>
+    </AuthContextProvider>
     </>
    
   );
