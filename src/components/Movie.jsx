@@ -25,7 +25,7 @@ const Movie = ({ movie }) => {
        alert('Please log in to save a movie!')
     }
    }
-
+  console.log(saved)
   return (
     <div key={movie.id} className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2">
       <div className="absolute w-full h-full opacity-0 hover:opacity-100 hover:bg-black/80  text-white flex justify-center items-center">
