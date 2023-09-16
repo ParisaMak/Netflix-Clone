@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect , useState } from 'react';
+import { useEffect , useState ,useRef } from 'react';
 import Movie from './Movie';
 import {BiSolidChevronRightCircle , BiSolidChevronLeftCircle } from "react-icons/bi";
 
@@ -29,36 +29,50 @@ const Row = ({title , fetchURL , id}) => {
             });
     },[fetchURL])
 
-    const slider = document.getElementById('slider' + id);
-    const handleslideLeft = () => {
-        slider.scrollLeft += 500;
-    }
-    const handleslideRight = () => {
-        let slider = document.getElementById('slider' + id);
-          slider.scrollLeft-= 500;
-      }
-      
+    const sliderRef = useRef(null);
+
+    const handleSlideLeft = () => {
+      const sliderWidth = sliderRef.current.offsetWidth;
+      sliderRef.current.scrollBy(-sliderWidth, 0);
+    };
+  
+    const handleSlideRight = () => {
+      const sliderWidth = sliderRef.current.offsetWidth;
+      sliderRef.current.scrollBy(sliderWidth, 0);
+    };
+  
+    useEffect(() => {
+      const handleResize = () => {
+        sliderRef.current.scrollTo(0, 0);
+      };
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
+
     return(
         <>
-            <h2 className="text-white ml-2 font-bold md:text-xlvp-4">{title}</h2>
+            <h2 className="text-white ml-2 font-bold md:text-xl p-4">{title}</h2>
             <div className="relative flex items-center ">
                 {isLoading ? (
                     <p>Loading...</p>
                 ) : error ? (
                     <p>Error: {error.message}</p>
                 ) : (
-                    <div className="relative  overflow-x-scroll whitespace-nowrap  scrollbar-hide flex items-center group">
+                    <div className="relative  overflow-x-scroll whitespace-nowrap  scrollbar-hide flex items-center group ">
                        <BiSolidChevronLeftCircle 
-                       onClick={handleslideLeft}
+                       onClick={handleSlideLeft}
                        size={40} 
+                    
                        className="bg-white left-0 rounded-full absolute topacity-50 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block"/>
-                        <div id={'slider'+ id} className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative">
+                        <div ref={sliderRef} className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative">
                             {movies?.map((movie,id)=>{
-                            return <Movie movie={movie} key={id}/>
+                            return <Movie movie={movie} key={id} />
                             })}
                        </div>
                        <BiSolidChevronRightCircle
-                       onClick={handleslideRight}
+                       onClick={handleSlideRight}
                        size={40} 
                        className="bg-white right-0 rounded-full absolute topacity-50 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block"/>
                     </div>

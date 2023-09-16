@@ -9,7 +9,7 @@ const LogIn = () => {
   const [ email , setEmail ] = useState('');
   const [ password , setPassword ] = useState('')
   const [ error , setError ] = useState('')
-  const { user , logIn} = UserAuth()
+  const { logIn} = UserAuth()
   const navigate = useNavigate();
 
   const handleSubmit = async (e) =>{
@@ -33,8 +33,8 @@ const LogIn = () => {
           alt="netflix-background"
         />
         
-        <div className="backdrop-blur-sm fixed top-0 left-0 w-full h-screen flex justify-center items-center">
-          <div className="w-[450px] h-[500px] bg-black/75 text-white flex justify-center items-center">
+        <div className="backdrop-blur-sm fixed top-0 left-0 w-full h-screen flex justify-center items-center z-20">
+          <div className="w-full h-full bg-black/75 text-white flex justify-center items-center sm:w-[450px] sm:h-[500px]">
             <div className="w-[320px] h-[400px] py-16">
               <h1 className="text-3xl font-bold">Sign In</h1>
               {error ? <p className='p-3 bg-red-400 my-2'>{error}</p> : null}

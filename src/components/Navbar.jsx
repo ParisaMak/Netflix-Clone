@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate , Link } from "react-router-dom";
-import { UserAuth } from '../context/AuthContext'
-import { handler } from 'tailwind-scrollbar-hide';
+import { UserAuth ,signOut} from '../context/AuthContext'
+
 
 const Navbar = () => {
   const { logOut , user } =  UserAuth()
