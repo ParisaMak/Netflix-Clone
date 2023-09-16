@@ -1,8 +1,6 @@
 import Main from '../components/Main';
 import Row from '../components/Row';
 import request from '../request';
-import { UserAuth } from '../context/AuthContext';
-
 
 const Home = () => {
 
